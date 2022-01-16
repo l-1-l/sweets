@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    container_name: sweet_pg
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-yanhuo}
+      # PGDATA: /data/postgres
+    # volumes:
+    #   - postgres:/data/postgres
+    volumes:
+      # - ./.local/pg/postgres.conf:/usr/local/etc/postgres/postgres.conf
+      - ./.local/pg/data:/var/lib/postgresql/data
+    # - ./backups:/backups
+    # command: "postgres -c config_file=/usr/local/etc/postgres/postgres.conf"
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+    networks:
+      - postgres_sweet_net
+
+  redis:
+    image: redis
+    container_name: "sweet_redis"
+    restart: unless-stopped
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    networks:
+      - redis_sweet_net
+
+  rabbitmq:
+    container_name: 'sweet_rabbitmq'
+    image: rabbitmq:3.9.12-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-rabbitmq}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-rabbitmq}
+
+    ports:
+        - 5672:5672
+        - 15672:15672
+    # volumes:
+    #     - .local/rabbitmq/data/:/var/lib/rabbitmq/
+    #     - .local/rabbitmq/log/:/var/log/rabbitmq/
+    
+    networks:
+        - rabbitmq_sweet_net
+
+networks:
+  postgres_sweet_net:
+    driver: bridge
+  redis_sweet_net:
+    driver: bridge
+  rabbitmq_sweet_net:
+    driver: bridge
+
+volumes:
+  postgres:
+
+  # https://renzolucioni.com/postgres-docker-compose/

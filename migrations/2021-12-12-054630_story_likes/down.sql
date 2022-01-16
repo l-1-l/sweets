@@ -1,0 +1,1 @@
+drop table story_likes;

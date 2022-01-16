@@ -1,0 +1,2 @@
+[workspace]
+members = ["crates/uni_sms", "bin", "common", "user_access", "fireworks"]

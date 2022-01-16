@@ -1,0 +1,68 @@
+[package]
+name = "common"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+uni_sms = { path = "../crates/uni_sms" }
+xid = "1.0.0"
+serde_json = "1.0.74"
+async-trait = "0.1.52"
+argon2 = "0.3.2"
+once_cell = "1.9.0"
+idna = "0.2.3"
+regex = "1.5.4"
+dotenv = "0.15.0"
+rand = "0.8.4"
+celery = "0.4.0-rcn.11"
+geo = "0.18.0"
+lapin = "1.9.0"
+
+[dependencies.deadpool-lapin]
+version = "0.9.1"
+features = ["serde"]
+
+[dependencies.rand_core]
+version = "0.6.3"
+features = ["std"]
+
+[dependencies.serde]
+version = "1.0.133"
+features = ["derive"]
+
+[dependencies.uuid]
+version = "0.8.2"
+features = ["serde", "v4"]
+
+[dependencies.chrono]
+version = "0.4.19"
+features = ['serde']
+
+[dependencies.tokio]
+version = "1.15.0"
+features = ["full"]
+
+[dependencies.deadpool-runtime]
+version = "0.1.2"
+features = ["tokio_1"]
+
+[dependencies.redis]
+version = "0.21.5"
+features = ["tokio-comp"]
+
+[dependencies.deadpool-redis]
+version = "0.10.2"
+features = ["serde"]
+
+[dependencies.rust_decimal]
+version = "1.20.0"
+features = ['db-tokio-postgres']
+
+[dependencies.deadpool-postgres]
+version = "0.10.1"
+features = ['rt_tokio_1']
+
+[dependencies.tokio-postgres]
+version = "0.7.5"
+features = ['with-chrono-0_4', 'with-serde_json-1']

@@ -1,0 +1,9 @@
+version = "Two"
+max_width = 80
+newline_style = "unix"
+imports_granularity = "Crate"
+normalize_doc_attributes = true
+reorder_impl_items = true
+group_imports = "StdExternalCrate"
+StdExternalCrate = true
+use_field_init_shorthand = true

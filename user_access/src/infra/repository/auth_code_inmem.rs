@@ -42,7 +42,7 @@ impl AuthCodeRepoExt for AuthCodeInmemRepo {
         let is_freeze_exists: bool = conn.exists(&freeze_key).await?;
         let now = Utc::now().timestamp();
         if !is_freeze_exists {
-            conn.set_ex(freeze_key, now, 120).await?;
+            conn.set_ex(freeze_key, now, 60).await?;
         }
 
         Ok(())

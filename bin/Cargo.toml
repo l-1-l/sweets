@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 user_access = { path = "../user_access" }
 common = { path = "../common" }
-axum = { version = "0.4.4", features = ["ws", "headers"] }
+axum = { version = "0.4.5", features = ["ws", "headers"] }
 tokio = { version = "1.15.0", features = ["full"] }
 hyper = { version = "0.14.16", features = ["full"] }
 tower = { version = "0.4.11", features = ["full"] }

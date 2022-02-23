@@ -45,7 +45,7 @@ impl From<&User> for UserDto {
 pub struct AccountDto {
     id: String,
     user_id: Option<String>,
-    phone_numeber: PhoneNumberDto,
+    phone_number: PhoneNumberDto,
     email: Option<String>,
     status: i16,
     created_at: DateTime<Utc>,
@@ -57,7 +57,7 @@ impl From<&Account> for AccountDto {
         Self {
             id: account.base().id().to_string(),
             user_id: account.user_id().map(|user_id| user_id.to_string()),
-            phone_numeber: PhoneNumberDto::from(account.phone_number()),
+            phone_number: PhoneNumberDto::from(account.phone_number()),
             email: account.email().map(|email| email.to_string()),
             status: account.status().as_i16(),
             created_at: *account.base().created_at(),

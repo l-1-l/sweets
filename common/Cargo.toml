@@ -19,9 +19,14 @@ celery = "0.4.0-rcn.11"
 geo = "0.19.0"
 lapin = "2.0.1"
 idgenerator = "2.0.0"
+tracing = "0.1.29"
+
+[dependencies.tracing-subscriber]
+version = "0.3.9"
+features = ['env-filter', 'std']
 
 [dependencies.deadpool-lapin]
-version = "0.9.1"
+version = "0.10.0"
 features = ["serde"]
 
 [dependencies.rand_core]

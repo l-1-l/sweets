@@ -1,6 +1,6 @@
 use crate::{container::AppContainer, routes};
 use axum::AddExtensionLayer;
-use common::Config;
+use common::{tracing, Config};
 use std::{net::SocketAddr, sync::Arc};
 use tokio_postgres::NoTls;
 use tower::ServiceBuilder;
@@ -55,7 +55,7 @@ pub async fn run(config: &Config) {
 
     let addr = SocketAddr::from((config.service().bind, config.service().port));
 
-    tracing::info!("http server is listening on \"{}\"", addr);
+    tracing::debug!("http server is listening on \"{}\"", addr);
 
     axum::Server::bind(&addr)
         .serve(router.into_make_service())

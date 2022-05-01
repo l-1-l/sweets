@@ -1,5 +1,5 @@
 use crate::{container::AppContainer, routes};
-use axum::AddExtensionLayer;
+use axum::extract::Extension;
 use common::{tracing, Config};
 use std::{net::SocketAddr, sync::Arc};
 use tokio_postgres::NoTls;
@@ -47,7 +47,7 @@ pub async fn run(config: &Config) {
     let middlewares = ServiceBuilder::new()
         .layer(TraceLayer::new_for_http())
         .layer(CompressionLayer::new())
-        .layer(AddExtensionLayer::new(app_container))
+        .layer(Extension(app_container))
         .layer(CorsLayer::permissive())
         .into_inner();
 

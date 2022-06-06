@@ -32,7 +32,7 @@ use std::{
 
 // impl Error for InvalidBussinessStatusCode {}
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ResponseStatus(
     /// Business status code
     NonZeroU32,
@@ -64,6 +64,12 @@ impl PartialEq<u32> for ResponseStatus {
     #[inline]
     fn eq(&self, other: &u32) -> bool {
         self.bussiness_code_as_u32() == *other
+    }
+}
+
+impl PartialEq<ResponseStatus> for u32 {
+    fn eq(&self, other: &ResponseStatus) -> bool {
+        *self == other.bussiness_code_as_u32()
     }
 }
 

@@ -1,5 +1,12 @@
 use std::fmt::Display;
 
+// static CODE_POOL: Lazy<Mutex<HashMap<u16, SessionCloseStatus>>> =
+//     Lazy::new(|| {
+//         let mut m = HashMap::new();
+//         Mutex::new(m)
+//     });
+
+#[derive(Debug, Clone, Copy, Eq)]
 pub enum SessionCloseStatus {
     //**********************************************************
     //* Closed due to client misbehavior
@@ -46,7 +53,7 @@ pub enum SessionCloseStatus {
 }
 
 impl SessionCloseStatus {
-    pub fn as_i16(&self) -> i16 {
+    pub fn as_u16(&self) -> u16 {
         match self {
             SessionCloseStatus::IllegalRequest => 100,
             SessionCloseStatus::HeartBeatTimeout => 110,
@@ -70,7 +77,7 @@ impl SessionCloseStatus {
         }
     }
 
-    pub fn from_i16(status: i16) -> Self {
+    pub fn from_u16(status: u16) -> Self {
         match status {
             100 => SessionCloseStatus::IllegalRequest,
             110 => SessionCloseStatus::HeartBeatTimeout,
@@ -93,6 +100,10 @@ impl SessionCloseStatus {
             701 => SessionCloseStatus::UserIsBlocked,
             _ => SessionCloseStatus::UnknownError,
         }
+    }
+
+    pub fn is_server_error(&self) -> bool {
+        (200..300).contains(&self.as_u16())
     }
 }
 
@@ -120,5 +131,17 @@ impl Display for SessionCloseStatus {
         };
 
         write!(f, "{}", status)
+    }
+}
+
+impl PartialEq<u16> for SessionCloseStatus {
+    fn eq(&self, other: &u16) -> bool {
+        self.as_u16() == *other
+    }
+}
+
+impl PartialEq<SessionCloseStatus> for SessionCloseStatus {
+    fn eq(&self, other: &SessionCloseStatus) -> bool {
+        self.as_u16() == other.as_u16()
     }
 }

@@ -1,5 +1,4 @@
 use std::{
-    // error::Error,
     fmt,
     num::{NonZeroU16, NonZeroU32},
 };
@@ -74,16 +73,32 @@ impl PartialEq<ResponseStatus> for u32 {
 }
 
 impl ResponseStatus {
+    pub fn is_illegal_request(&self) -> bool {
+        self.business_code() == ResponseStatus::INVALID_REQUEST.business_code()
+            || self.business_code()
+                == ResponseStatus::ILLEGAL_ARGUMENT.business_code()
+    }
+
+    #[inline]
+    pub fn http_status_code(&self) -> NonZeroU16 {
+        self.2
+    }
+
     #[inline]
     pub fn http_status_code_as_u16(&self) -> u16 {
-        self.2.into()
+        self.2.get()
+    }
+
+    pub fn business_code(&self) -> NonZeroU32 {
+        self.0
     }
 
     #[inline]
     pub fn bussiness_code_as_u32(&self) -> u32 {
-        self.0.into()
+        self.0.get()
     }
 
+    #[inline]
     pub fn reason(&self) -> &'static str {
         self.1
     }
@@ -359,8 +374,3 @@ response_status!(
 
   (6900,REDUNDANT_REQUEST_FOR_PRESIGNED_PROFILE_URL, "The request for the presigned profile URL is redundant", 406);
 );
-
-fn d() {
-    let c = ResponseStatus::OK;
-    // ResponseStatus::cano
-}
